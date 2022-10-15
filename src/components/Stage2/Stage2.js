@@ -20,6 +20,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './Stage2.css'
+import IconButton from '@mui/material/IconButton';
+
 import * as React from 'react';
 const Stage2 = () => {
     const location = useLocation();
@@ -129,9 +131,9 @@ const Stage2 = () => {
                                                         >
                                                             <div className='dialog-container' >
                                                                 <DialogTitle id="alert-dialog-title">
-                                                                    <div>
-                                                                        Add Car details to the user and Transfer to Bussiness manager
-                                                                    </div>
+                                                                <div className='addcarHeader'>
+                                                                    Add Car Details
+                                                                </div>
                                                                 </DialogTitle>
                                                                 <DialogContent>
                                                                     <div className='dialog-input' >
@@ -158,7 +160,9 @@ const Stage2 = () => {
                                                                     </div>
                                                                 </DialogContent>
                                                                 <DialogActions>
-                                                                    <Button onClick={handleSaveAndTransfer}  >Save and Transfer</Button>
+                                                                <Tooltip title="Add card details and transfer to Businees manager">
+                <Button style={{backgroundColor:'black',color:'white'}} onClick={handleSaveAndTransfer} >Save and Transfer</Button>
+                </Tooltip>
                                                                 </DialogActions>
                                                             </div>
                                                         </Dialog>
@@ -167,7 +171,6 @@ const Stage2 = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             )

@@ -6,9 +6,25 @@
 }
 
 .dialog-container{
-    width: 500px;
+    width: 600px;
+    height: auto;
+    padding: 50px 0px;
+    /* background-color: red; */
 }
 
 .dialog-feild{
     width: 100%;
+}
+.addcarHeader{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+@media screen and (max-width:720px) {
+    .dialog-container{
+        width: 80vw;
+    }
+    
+    
 }
