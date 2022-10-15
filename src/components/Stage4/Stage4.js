@@ -8,14 +8,15 @@ import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
+import MailIcon from '@mui/icons-material/Mail';
 import { useLocation } from 'react-router-dom';
 import Nav from '../../nav';
-import './Dashboard.css';
+import './Stage4.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import Swal from 'sweetalert2'
-const Dashboard=(props)=>{
+const Stage4=(props)=>{
     const location=useLocation();
     const {name,stage,roleName}=location.state;
     console.log(name,stage,roleName)
@@ -24,41 +25,14 @@ const Dashboard=(props)=>{
         fetchData();
     },[])
  const fetchData=async()=>{
-    const q = query(collection(db, "data"), where("stage", "==", 0));
+    const q = query(collection(db, "data"), where("stage", "==", 2));
     const querySnapshot = await getDocs(q);
         setData([]);
         querySnapshot.forEach((doc) => {
             setData(data=>[...data,{...doc.data(),id:doc.id}]);
-            // console.log("id",doc.id)
         });
-        // console.log("data is",data)
-        // console.log("stage",q)
   }
-  const Further=async(c)=>{
-        const {id}=c;
-         const docRef = doc(db, "data", id);
-         await updateDoc(docRef, {
-            stage: 1
-          });
-          Swal.fire({
-            title: 'success',
-            text: 'successfully transferred to sales assistent.',
-            icon: 'success',
-          })
-          fetchData(); 
-  } 
-  const handleDelete=async(c)=>{
-       const {id}=c;
-       console.log("hello id is",id)
-       await deleteDoc(doc(db, "data", id));
-       Swal.fire({
-        title: 'success',
-        text: 'successfully deleted the user.',
-        icon: 'success',
-      })
-       fetchData();
-
-  }      
+      
   
 
     return(
@@ -100,23 +74,15 @@ const Dashboard=(props)=>{
                         <div className='cont'>CONTACT NO:<div className='cont1'>{d.contact}</div></div>
                         <div className='Mail1'>MAIL:<div className='mail1'>{d.mail}</div></div>
                         <div className='Icons'>
-                            <Tooltip title="make a call to user" >
+                        <Tooltip title="Call to user and tell about offers">
                             <div className='Icon1'>
                             <a href={`tel:+91 ${d.contact}`} style={{color:'white',marginTop:5}}><CallOutlinedIcon/></a>
                             </div>
                             </Tooltip>
-                            <Tooltip title="Delete not intreseted user" >
-                            <div className='Icon2'  onClick={()=>{
-                                handleDelete(d)
-                            }} >
-                                <DeleteIcon/>
-                            </div>
-                            </Tooltip>
-                            <Tooltip title="Transfer to Sales Assistant">
-                            <div onClick={()=>{
-                                           Further(d);
-                            }} className='Icon2'>
-                                        <ArrowCircleRightOutlinedIcon/>
+                            <Tooltip title="Mail to user and tell about offers">
+                            <div className='Icon2'>
+                            <a href={`mailto:${d.mail}`} style={{color:'white',marginTop:5}}><MailIcon/></a>
+                                        
                              </div>
                             </Tooltip>
                                 
@@ -140,4 +106,4 @@ const Dashboard=(props)=>{
     )
 }
 
-export default Dashboard;
+export default Stage4;
