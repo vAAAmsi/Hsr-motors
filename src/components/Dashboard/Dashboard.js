@@ -47,8 +47,7 @@ const Dashboard=(props)=>{
 
     return(
         <div>
-            <Nav name={name}  />
-            
+            <Nav name={name}  />            
             <div className='Page'>
                 <div className='role-name' >Role : {roleName}</div>
                   <div className='page'>
