@@ -26,8 +26,11 @@ const Stage3=(props)=>{
  const fetchData=async()=>{
     // const q = query(collection(db, "purchased_items"), where("stage", "==", 0));
     const querySnapshot = await getDocs(collection(db, "purchased_items"));
+    setData([]);
     querySnapshot.forEach((doc) => {
       setData(data=>[...data,{...doc.data(),id:doc.id}]);
+    console.log("hellooo",doc.data())
+
     });
   }
   const Further=async(c)=>{
@@ -72,38 +75,24 @@ const Stage3=(props)=>{
                         data.map((d)=>{
                             return(
                                 <div>
-                    <div className='card1'>
+                    <div className='stage3-card1'>
                      <div>
                         <div className='icon'>
-                            <img className='image' src={Avthar}></img>
+                            <img className='stage3-image' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8bx07Y1nnGrXLYfNHt6aVRBRbbwPajUr58w&usqp=CAU"></img>
                         
                         </div>
-                        <div className='Inner'>
-                        <div className='inner'>
-                        <div className='name'>NAME:<div className='name1'>{d.name}</div></div>
+                        <div className='stage3-Inner'>
+                        <div className='stage3-inner'>
+                        <div className='name'>CAR NAME:<div className='name1'>{d.carName}</div></div>
+                        <div className='cont'>CAR MODEL:<div className='cont1'>{d.carModel}</div></div>
+                        <div className='Mail1'>Sale Assistant name:<div className='mail1'>{d.saleAssisstentName}</div></div>
+                      
+                        </div>
+                        <div className='stage3-inner'>
+                        <div className='name'>CLIENT NAME:<div className='name1'>{d.name}</div></div>
                         <div className='cont'>CONTACT NO:<div className='cont1'>{d.contact}</div></div>
                         <div className='Mail1'>MAIL:<div className='mail1'>{d.mail}</div></div>
-                        <div className='Icons'>
-                            <div className='Icon1'>
-                            <a href={`tel:+91 ${d.contact}`} style={{color:'white',marginTop:5}}><CallOutlinedIcon/></a>
-                            </div>
-                            <Tooltip title="Delete not intreseted user" >
-                            <div className='Icon2'  onClick={()=>{
-                                handleDelete(d)
-                            }} >
-                                <DeleteIcon/>
-                            </div>
-                            </Tooltip>
-                            <Tooltip title="Transfer to further">
-                            <div onClick={()=>{
-                                           Further(d);
-                            }} className='Icon2'>
-                                        <ArrowCircleRightOutlinedIcon/>
-                             </div>
-                            </Tooltip>
-                                
-                            
-                        </div>
+                      
                         </div>
                         </div>
                      </div>

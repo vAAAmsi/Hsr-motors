@@ -21,6 +21,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './Stage2.css'
 import IconButton from '@mui/material/IconButton';
+import Swal from 'sweetalert2';
 
 import * as React from 'react';
 const Stage2 = () => {
@@ -54,7 +55,14 @@ const Stage2 = () => {
     }
     const handleDelete = async (c) => {
         const { id } = c;
+        console.log("id is",id)
         await deleteDoc(doc(db, "data", id));
+        Swal.fire({
+            title: 'success',
+            text: 'successfully deleted the user.',
+            icon: 'success',
+            confirmButtonText: 'okay'
+          })
         fetchData();
     }
   const handleSaveAndTransfer=async()=>{
@@ -107,9 +115,11 @@ const Stage2 = () => {
                                                     <div className='cont'>CONTACT NO:<div className='cont1'>{d.contact}</div></div>
                                                     <div className='Mail1'>MAIL:<div className='mail1'>{d.mail}</div></div>
                                                     <div className='Icons'>
+                                                    <Tooltip title="make a call to user" >
                                                         <div className='Icon1'>
-                                                            <a href={`tel:+91 ${d.contact}`} style={{ color: 'white', marginTop: 5 }}><CallOutlinedIcon /></a>
+                                                        <a href={`tel:+91 ${d.contact}`} style={{color:'white',marginTop:5}}><CallOutlinedIcon/></a>
                                                         </div>
+                                                        </Tooltip>
                                                         <Tooltip title="Delete not intreseted user" >
                                                             <div className='Icon2' onClick={() => {
                                                                 handleDelete(d)
