@@ -1,0 +1,14 @@
+.dialog-input{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.dialog-container{
+    width: 500px;
+}
+
+.dialog-feild{
+    width: 100%;
+}
