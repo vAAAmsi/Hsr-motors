@@ -1,0 +1,28 @@
+.newNav{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.Wsearch{
+    width: 100%;
+    height: auto;
+    /* background-color:#F5F5F5; */
+    margin-top: 30px;
+}
+
+.Wsearch1{
+    width: 100%;
+    height: auto;
+    /* background-color: red; */
+    margin: 0px auto;
+    display: flex;
+    justify-content: center ;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 25px;
+}
+.search-bar{
+    width: 50%; 
+
+}

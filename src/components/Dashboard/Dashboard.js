@@ -10,6 +10,11 @@ import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
 import Nav from '../../nav';
+import './Dashboard.css';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
+
 const Dashboard=(props)=>{
     const location=useLocation();
     const {name,stage,roleName}=location.state;
@@ -47,7 +52,24 @@ const Dashboard=(props)=>{
 
     return(
         <div>
-            <Nav name={name}  />            
+           <div className='newNav' > <Nav name={name}  /></div>
+             
+           <div className='Wsearch'>
+                <div className='Wsearch1'>
+                     <TextField className='search-bar' 
+                     InputProps={{
+                        startAdornment:(
+                            <div><SearchIcon/></div>
+                        )
+                     }}
+                     label="Search" variant="outlined" />
+                     <div>
+                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
+                     </div>
+                </div>
+            </div>
+
+            
             <div className='Page'>
                 <div className='role-name' >Role : {roleName}</div>
                   <div className='page'>

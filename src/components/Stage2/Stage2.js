@@ -3,7 +3,7 @@ import Avthar from '../../assets/Avthar.jpg'
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import db from '../../firebase/firebase';
-import { collection, getDocs, where, query, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, where, query, updateDoc, doc, deleteDoc,addDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
@@ -11,21 +11,23 @@ import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
 import Nav from '../../nav';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
 import './Stage2.css'
 import * as React from 'react';
 const Stage2 = () => {
     const location = useLocation();
     const { name, stage, roleName } = location.state;
-    console.log(name, stage, roleName)
+    // console.log(name, stage, roleName)
     const [data, setData] = useState([]);
     const [open, setOpen] = React.useState(false);
+    const [currentClicked,setCurrentClicked]=useState();
     const [carName, setCarName] = useState('');
     const [carModel, setCarModel] = useState('');
 
@@ -53,10 +55,37 @@ const Stage2 = () => {
         await deleteDoc(doc(db, "data", id));
         fetchData();
     }
-
+  const handleSaveAndTransfer=async()=>{
+    const data={
+        ...currentClicked,saleAssisstentName:name,carName,carModel
+    }
+    data.stage=2;
+    const { id } = currentClicked;
+      await addDoc(collection(db,"purchased_items"),data);
+      const docRef = doc(db, "data", id);
+      await updateDoc(docRef, {
+         stage: 2
+       });
+       handleDelete();
+       fetchData();
+  }
     return (
         <div>
-            <Nav name={name} />
+            <Nav name={name}  />  
+            <div className='Wsearch'>
+                <div className='Wsearch1'>
+                     <TextField className='search-bar' 
+                     InputProps={{
+                        startAdornment:(
+                            <div><SearchIcon/></div>
+                        )
+                     }}
+                     label="Search" variant="outlined" />
+                     <div>
+                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
+                     </div>
+                </div>
+            </div>
             <div className='Page'>
                 <div className='role-name' >Role : {roleName}</div>
                 <div className='page'>
@@ -86,8 +115,8 @@ const Stage2 = () => {
                                                                 <DeleteIcon />
                                                             </div>
                                                         </Tooltip>
-                                                        <Tooltip title="Transfer to further">
-                                                            <div className='Icon2' onClick={() => { setOpen(true) }} >
+                                                        <Tooltip title="Add Car details if the user need to purchase the car and transfer to bussiness manager">
+                                                            <div className='Icon2' onClick={() => { setOpen(true);setCurrentClicked(d) }} >
                                                                 <AddIcon />
                                                             </div>
                                                         </Tooltip>
@@ -129,7 +158,7 @@ const Stage2 = () => {
                                                                     </div>
                                                                 </DialogContent>
                                                                 <DialogActions>
-                                                                    <Button   >Save and Transfer</Button>
+                                                                    <Button onClick={handleSaveAndTransfer}  >Save and Transfer</Button>
                                                                 </DialogActions>
                                                             </div>
                                                         </Dialog>
