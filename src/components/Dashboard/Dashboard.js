@@ -3,13 +3,22 @@ import Avthar from '../../assets/Avthar.jpg'
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import db from '../../firebase/firebase';
-import { collection, getDocs,where,query,updateDoc } from "firebase/firestore";
+import { collection, getDocs,where,query,updateDoc,doc,deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { async } from '@firebase/util';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useLocation } from 'react-router-dom';
+import Nav from '../../nav';
+import './Dashboard.css';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Dashboard=(props)=>{
-    const {roleName}=props;
+    const location=useLocation();
+    const {name,stage,roleName}=location.state;
+    console.log(name,stage,roleName)
     const [data,setData]=useState([]);
     useEffect(()=>{
         fetchData();
@@ -20,30 +29,47 @@ const Dashboard=(props)=>{
     const querySnapshot = await getDocs(q);
         setData([]);
         querySnapshot.forEach((doc) => {
-            setData(data=>[...data,doc.data()]);
+            setData(data=>[...data,{...doc.data(),id:doc.id}]);
             // console.log("id",doc.id)
         });
         // console.log("data is",data)
         // console.log("stage",q)
   }
   const Further=async(c)=>{
-          console.log(c)
-                //  const washingtonRef = doc(db, "cities", "DC");
-                //   await updateDoc(washingtonRef, {
-                //     capital: true
-                //     });
-                const querySnapshot = await getDocs(collection(db,"data"));
-                    querySnapshot.forEach((doc) => {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id,c);
-                    });
-
+        const {id}=c;
+         const docRef = doc(db, "data", id);
+         await updateDoc(docRef, {
+            stage: 1
+          });
+          fetchData(); 
   } 
-        
+  const handleDelete=async(c)=>{
+       const {id}=c;
+       await deleteDoc(doc(db, "data", id));
+       fetchData();
+  }      
   
 
     return(
         <div>
+           <div className='newNav' > <Nav name={name}  /></div>
+             
+           <div className='Wsearch'>
+                <div className='Wsearch1'>
+                     <TextField className='search-bar' 
+                     InputProps={{
+                        startAdornment:(
+                            <div><SearchIcon/></div>
+                        )
+                     }}
+                     label="Search" variant="outlined" />
+                     <div>
+                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
+                     </div>
+                </div>
+            </div>
+
+            
             <div className='Page'>
                 <div className='role-name' >Role : {roleName}</div>
                   <div className='page'>
@@ -66,7 +92,13 @@ const Dashboard=(props)=>{
                             <div className='Icon1'>
                             <a href={`tel:+91 ${d.contact}`} style={{color:'white',marginTop:5}}><CallOutlinedIcon/></a>
                             </div>
-                            
+                            <Tooltip title="Delete not intreseted user" >
+                            <div className='Icon2'  onClick={()=>{
+                                handleDelete(d)
+                            }} >
+                                <DeleteIcon/>
+                            </div>
+                            </Tooltip>
                             <Tooltip title="Transfer to further">
                             <div onClick={()=>{
                                            Further(d);

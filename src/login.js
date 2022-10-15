@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const roles=[
   'Tele-calling','Sales Assistant','Business Manager','Sales Specialist'
 ]
+const dashboardRoutes=['/tele-calling','/sales-assistant','/bussiness-manager','/sales-specalist']
 function Login(){
     const [role, setRole] = React.useState('');
     const [name,setName]=React.useState('');
@@ -21,7 +22,8 @@ function Login(){
     setRole(event.target.value);
   };
   const handleClick=()=>{
-     navigate('/dashboard',{state:{name:name,stage:role,roleName:roles[role]}})
+    console.log("hello",dashboardRoutes[role])
+     navigate(dashboardRoutes[role],{state:{name:name,stage:role,roleName:roles[role]}})
   }
   const handleChangeName=(e)=>{
       setName(e.target.value);

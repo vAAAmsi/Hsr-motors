@@ -5,16 +5,17 @@ import './nav.css';
 import Login from './login.js';
 import './login.css';
 import { Routes, Route } from "react-router-dom";
-import Stage3 from './components/Stage3/stage3'
+import Dashboard from './components/Dashboard/Dashboard';
+import Stage2 from './components/Stage2/Stage2';
 
 function App() {
   return (
        <div>
-        {/* <Routes>
+         <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Nav />} />
-      </Routes> */}
-        <Stage3/>
+        <Route path="/tele-calling" element={<Dashboard />} />
+        <Route  path='/sales-assistant' element={<Stage2/>} ></Route>
+      </Routes>
        </div>
      
   );
