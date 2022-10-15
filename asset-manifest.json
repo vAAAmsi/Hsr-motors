@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/Hsr-motors/static/css/main.4156009d.css",
+    "main.js": "/Hsr-motors/static/js/main.e31226d7.js",
+    "static/js/787.17f9ff7d.chunk.js": "/Hsr-motors/static/js/787.17f9ff7d.chunk.js",
+    "static/media/Hsrlogo.jpg": "/Hsr-motors/static/media/Hsrlogo.67f5e3e5a5b6c1b6dbeb.jpg",
+    "static/media/cloud1.png": "/Hsr-motors/static/media/cloud1.f07436f6ca2ed0d12e04.png",
+    "static/media/cloud2.png": "/Hsr-motors/static/media/cloud2.8b9a3d0b6ac109ddebc3.png",
+    "static/media/circle.png": "/Hsr-motors/static/media/circle.91c5f286ff5cddf150ff.png",
+    "index.html": "/Hsr-motors/index.html",
+    "main.4156009d.css.map": "/Hsr-motors/static/css/main.4156009d.css.map",
+    "main.e31226d7.js.map": "/Hsr-motors/static/js/main.e31226d7.js.map",
+    "787.17f9ff7d.chunk.js.map": "/Hsr-motors/static/js/787.17f9ff7d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4156009d.css",
+    "static/js/main.e31226d7.js"
+  ]
+}
