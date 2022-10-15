@@ -6,24 +6,38 @@ import db from '../../firebase/firebase';
 import { collection, getDocs,where,query,updateDoc,doc,deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
 import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
 import Nav from '../../nav';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import './Stage2.css'
+import * as React from 'react';
 const Stage2=()=>{
     const location=useLocation();
     const {name,stage,roleName}=location.state;
     console.log(name,stage,roleName)
     const [data,setData]=useState([]);
+    const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
     useEffect(()=>{
         fetchData();
     },[])
  const fetchData=async()=>{
     const q = query(collection(db, "data"), where("stage", "==", 1));
-
     const querySnapshot = await getDocs(q);
         setData([]);
         querySnapshot.forEach((doc) => {
@@ -33,14 +47,7 @@ const Stage2=()=>{
         // console.log("data is",data)
         // console.log("stage",q)
   }
-  const Further=async(c)=>{
-        const {id}=c;
-         const docRef = doc(db, "data", id);
-         await updateDoc(docRef, {
-            stage: 1
-          });
-          fetchData(); 
-  } 
+  
   const handleDelete=async(c)=>{
        const {id}=c;
        await deleteDoc(doc(db, "data", id));
@@ -97,13 +104,38 @@ const Stage2=()=>{
                             </div>
                             </Tooltip>
                             <Tooltip title="Transfer to further">
-                            <div onClick={()=>{
-                                           Further(d);
-                            }} className='Icon2'>
-                                        <ArrowCircleRightOutlinedIcon/>
+                            <div className='Icon2' onClick={()=>{setOpen(true)}} >
+                                        <AddIcon/>
                              </div>
                             </Tooltip>
-                                
+                            <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    
+                >
+                    <div className='dialog-container' >
+        <DialogTitle id="alert-dialog-title">
+          <div>
+              Add Car details to the user and Transfer to Bussiness manager
+          </div>
+        </DialogTitle>
+        <DialogContent>
+           <div className='dialog-input' >
+          <div>
+          <TextField className='dialog-feild' variant='outlined' name='car-name' label="car name" placeholder='Add car name' ></TextField>
+          </div>
+           <div>
+           <TextField  className='dialog-feild' variant='outlined' name='car-model' label="car model" placeholder='Add car model' ></TextField>
+           </div>
+           </div>
+        </DialogContent>
+        <DialogActions>
+            <Button>Save and Transfer</Button>
+        </DialogActions>
+        </div>
+      </Dialog>
                             
                         </div>
                         </div>
