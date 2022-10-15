@@ -20,6 +20,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './Stage2.css'
+import IconButton from '@mui/material/IconButton';
+
 import * as React from 'react';
 const Stage2=()=>{
     const location=useLocation();
@@ -108,7 +110,7 @@ const Stage2=()=>{
                                         <AddIcon/>
                              </div>
                             </Tooltip>
-                            <Dialog
+             <Dialog
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
@@ -117,22 +119,27 @@ const Stage2=()=>{
                 >
                     <div className='dialog-container' >
         <DialogTitle id="alert-dialog-title">
-          <div>
-              Add Car details to the user and Transfer to Bussiness manager
+          <div className='addcarHeader'>
+              Add Car Details
           </div>
         </DialogTitle>
         <DialogContent>
            <div className='dialog-input' >
           <div>
-          <TextField className='dialog-feild' variant='outlined' name='car-name' label="car name" placeholder='Add car name' ></TextField>
+          <TextField className='dialog-feild' variant='outlined' name='car-name' label="Car Name" placeholder='Add car name' ></TextField>
           </div>
            <div>
-           <TextField  className='dialog-feild' variant='outlined' name='car-model' label="car model" placeholder='Add car model' ></TextField>
+           <TextField  className='dialog-feild' variant='outlined' name='car-model' label="Car Model" placeholder='Add car model' ></TextField>
            </div>
            </div>
         </DialogContent>
         <DialogActions>
-            <Button>Save and Transfer</Button>
+        <Tooltip title="Add card details and transfer to Businees manager">
+                <IconButton>
+                <Button style={{backgroundColor:'black',color:'white'}} >Save and Transfer</Button>
+                </IconButton>
+                </Tooltip>
+           
         </DialogActions>
         </div>
       </Dialog>
