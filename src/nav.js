@@ -8,10 +8,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import Dashboard from './components/Dashboard/Dashboard';
-function Nav(){
-    const location=useLocation();
-    const {name,stage,roleName}=location.state;
-    console.log(name,stage,roleName)
+function Nav({name}){
+    
     return(
         <div className='Bar'>
             <div className="bar">
@@ -36,7 +34,7 @@ function Nav(){
                 </div>
                 </div>
             </div>
-            <div className='Wsearch'>
+            {/* <div className='Wsearch'>
                 <div className='Wsearch1'>
                      <TextField className='search-bar' 
                      InputProps={{
@@ -49,8 +47,8 @@ function Nav(){
                      <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
                      </div>
                 </div>
-            </div>
-            <Dashboard  roleName={roleName}   />
+            </div> */}
+            {/* <Dashboard  roleName={roleName}   /> */}
         </div>
     )
 }
