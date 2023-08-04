@@ -6,30 +6,28 @@ import db from '../../firebase/firebase';
 import { collection, getDocs,where,query,updateDoc,doc,deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
-import Nav from '../../nav';
+import Nav from '../navbar/nav';
 import './Stage3.css';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SearchIcon from '@mui/icons-material/Search';
+
 
 const Stage3=(props)=>{
     const location=useLocation();
     const {name,stage,roleName}=location.state;
-    console.log(name,stage,roleName)
     const [data,setData]=useState([]);
+    const [filtername,setFiltername] = useState('')
+
     useEffect(()=>{
         fetchData();
     },[])
  const fetchData=async()=>{
-    // const q = query(collection(db, "purchased_items"), where("stage", "==", 0));
+    
     const querySnapshot = await getDocs(collection(db, "purchased_items"));
     setData([]);
     querySnapshot.forEach((doc) => {
       setData(data=>[...data,{...doc.data(),id:doc.id}]);
-    console.log("hellooo",doc.data())
 
     });
   }
@@ -46,24 +44,17 @@ const Stage3=(props)=>{
        await deleteDoc(doc(db, "data", id));
        fetchData();
   }      
-  
-
+    
     return(
         <div>
            <div className='newNav' > <Nav name={name}  /></div>
              
            <div className='Wsearch'>
                 <div className='Wsearch1'>
-                     <TextField className='search-bar' 
-                     InputProps={{
-                        startAdornment:(
-                            <div><SearchIcon/></div>
-                        )
-                     }}
-                     label="Search" variant="outlined" />
-                     <div>
-                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
-                     </div>
+                     <TextField style={{width:'60%'}} label='Search' onChange={(e) => {
+                        setFiltername(e.target.value)
+                     }} ></TextField>
+                     
                 </div>
             </div>
 
@@ -72,17 +63,27 @@ const Stage3=(props)=>{
                 <div className='role-name' >Role : {roleName}</div>
                   <div className='page'>
                       {
-                        data.map((d)=>{
+                        data
+                        .filter((item)=>{
+                           if(item.name.length !==undefined){
                             return(
-                                <div>
-                    <div className='stage3-card1'>
-                     <div>
+                                
+                                item.name.toLowerCase().includes(filtername.toLowerCase())
+                            )
+                           }
+                        })
+                        
+                        .map((d,index)=>{
+                            return(
+                                <div key={index}>
+                    <div  className='stage3-card1'>
+                     <div  >
                         <div className='icon'>
                             <img className='stage3-image' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8bx07Y1nnGrXLYfNHt6aVRBRbbwPajUr58w&usqp=CAU"></img>
                         
                         </div>
-                        <div className='stage3-Inner'>
-                        <div className='stage3-inner'>
+                        <div className='stage3-Inner' >
+                        <div className='stage3-inner' >
                         <div className='name'>CAR NAME:<div className='name1'>{d.carName}</div></div>
                         <div className='cont'>CAR MODEL:<div className='cont1'>{d.carModel}</div></div>
                         <div className='Mail1'>Sale Assistant name:<div className='mail1'>{d.saleAssisstentName}</div></div>

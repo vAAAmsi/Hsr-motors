@@ -6,10 +6,9 @@ import db from '../../firebase/firebase';
 import { collection, getDocs,where,query,updateDoc,doc,deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Tooltip from '@mui/material/Tooltip';
-import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
-import Nav from '../../nav';
+import Nav from '../navbar/nav';
 import './Dashboard.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -18,21 +17,22 @@ import Swal from 'sweetalert2'
 const Dashboard=(props)=>{
     const location=useLocation();
     const {name,stage,roleName}=location.state;
-    console.log(name,stage,roleName)
     const [data,setData]=useState([]);
+    const [filtername,setFiltername] = useState('')
+    const q = query(collection(db, "data"), where("stage", "==", 0));
     useEffect(()=>{
         fetchData();
+        
     },[])
  const fetchData=async()=>{
-    const q = query(collection(db, "data"), where("stage", "==", 0));
+    
     const querySnapshot = await getDocs(q);
         setData([]);
         querySnapshot.forEach((doc) => {
             setData(data=>[...data,{...doc.data(),id:doc.id}]);
-            // console.log("id",doc.id)
+            
         });
-        // console.log("data is",data)
-        // console.log("stage",q)
+        
   }
   const Further=async(c)=>{
         const {id}=c;
@@ -67,16 +67,10 @@ const Dashboard=(props)=>{
              
            <div className='Wsearch'>
                 <div className='Wsearch1'>
-                     <TextField className='search-bar' 
-                     InputProps={{
-                        startAdornment:(
-                            <div><SearchIcon/></div>
-                        )
-                     }}
-                     label="Search" variant="outlined" />
-                     <div>
-                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
-                     </div>
+                <TextField style={{width:'80%'}} label='Search' onChange={(e) => {
+                        setFiltername(e.target.value)
+                     }} ></TextField>
+                     
                 </div>
             </div>
 
@@ -85,9 +79,19 @@ const Dashboard=(props)=>{
                 <div className='role-name' >Role : {roleName}</div>
                   <div className='page'>
                       {
-                        data.map((d)=>{
+                        data
+                        .filter((item)=>{
+                            if(item.name.length !==undefined){
+                             return(
+                                 
+                                 item.name.toLowerCase().includes(filtername.toLowerCase())
+                             )
+                            }
+                         })
+                        .map((d,index)=>{
+                          
                             return(
-                                <div>
+                                <div key={index}>
                     <div className='card1'>
                      <div>
                         <div className='icon'>

@@ -1,9 +1,4 @@
-// import logo from './logo.svg';
-import './App.css';
-import Nav from './nav.js'
-import './nav.css';
-import Login from './login.js';
-import './login.css';
+import Login from './components/loginpage/login.js';
 import { Routes, Route } from "react-router-dom";
 import Dashboard from './components/Dashboard/Dashboard';
 import Stage2 from './components/Stage2/Stage2';

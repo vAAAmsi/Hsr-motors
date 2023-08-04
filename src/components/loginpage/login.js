@@ -5,11 +5,12 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import React from 'react';
-import Hsrlogo from './assets/Hsrlogo.jpg';
-import cloud1 from './assets/cloud1.png';
-import cloud2 from './assets/cloud2.png';
-import circleImg from './assets/circle.png'
+import Hsrlogo from '../../assets/Hsrlogo.jpg';
+import cloud2 from '../../assets/cloud2.png'
 import { useNavigate } from 'react-router-dom';
+import './login.css'
+import Swal from 'sweetalert2';
+
 const roles=[
   'Tele-calling','Sales Assistant','Business Manager','Sales Specialist'
 ]
@@ -22,8 +23,11 @@ function Login(){
     setRole(event.target.value);
   };
   const handleClick=()=>{
-    console.log("hello",dashboardRoutes[role])
-     navigate(dashboardRoutes[role],{state:{name:name,stage:role,roleName:roles[role]}})
+    Swal.fire({
+      icon:'success',
+      title:'successfully logged in'
+    })
+    navigate(dashboardRoutes[role],{state:{name:name,stage:role,roleName:roles[role]}})
   }
   const handleChangeName=(e)=>{
       setName(e.target.value);
@@ -35,28 +39,26 @@ function Login(){
                       <div className='hsrl'>
                         <img className='hsrimg' src={Hsrlogo}></img>
                       </div>
-                      {/* <div>
-                        <img className='circle-imrole' src={circleImg}></img>
-                      </div> */}
                       <div>
                         <img className='cloud2' src={cloud2}></img>
                       </div>
                 </div>
                 <div className="log">
+                    <form onSubmit={handleClick}>
+
                     <div className="text">HSR MOTORS</div>
                     <div className="text1">Please provide the below information</div>
                     <div className="mail">
-                    <TextField onChange={handleChangeName}  className='TEmail' label="Username"  />
+                    <TextField onChange={handleChangeName} type='email'required  className='TEmail' label="Username"  />
                     </div>
                     <div className="password">
-                    <TextField className='pass' label="Password"  />
+                    <TextField className='pass' type='password' label="Password" required />
                     </div>
                         <div className='selector'>
                         <FormControl fullWidth >
         <InputLabel id="demo-simple-select-label" >Select Your Role</InputLabel>
         <Select
           labelId="demo-simple-select-label"
-        //   className='selector'
           id="demo-simple-select-label"
           value={role}
           label="Select your Role"
@@ -71,9 +73,11 @@ function Login(){
                         </div>
                <div className='Logbutton'>
                 <div className='Logbo'>
-                <Button onClick={handleClick} style={{backgroundColor:'black',borderRadius:'20px',width:120,height:45}} variant="contained">Login</Button>
+                <Button type='submit' style={{backgroundColor:'black',borderRadius:'20px',width:120,height:45}} variant="contained">Login</Button>
                 </div>
                 </div>
+
+                    </form>
 
            
             </div>

@@ -44,6 +44,8 @@
 {
     display: flex;
     gap: 5px;
+    
+    cursor: pointer;
 }
 .right{
     display: flex;
@@ -79,8 +81,7 @@
     flex-wrap: wrap;
     gap: 40px;
     justify-content: center;
-    /* background-color: red; */
-    /* justify-content: space-between; */
+    
 }
 
 .card1{
@@ -89,23 +90,22 @@
     background-color: white;
     border: 1px solid black ;
     border-radius: 20px;
-    /* text-align: center; */
+    
+
 }
 .icon{
   width: 100%;
   display: flex;
   justify-content: center;
   height: auto;
-  /* background-color: red; */
 }
 .image{
-  /* margin: 0px auto; */
-/* background-color: red; */
+  
     width: 150px;
     height: 150px;
     padding-top: 7px;
     border-radius: 50%;
-    /* margin: 0px auto; */
+    
 }
 .Inner{
     margin-top: 20px;
@@ -115,7 +115,7 @@
 .inner{
     width: 80%;
     height: auto;
-    /* background-color: red; */
+    
 }
 .Icons{
     display: flex;
@@ -145,10 +145,10 @@
 
 }
 .name{
-    /* display: flex; */
+    
     font-size: 17px;
     font-weight: 600;
-    /* align-items: center; */
+    
     
     
 }
@@ -160,14 +160,15 @@
     font-size: 17px;
     font-weight: 600;
 }
-  
+.right2-hidden{
+    display: none;
+}
 @media screen and (max-width:400px) {
-     .bar{
-        /* width: 90%; */
-        /* display: none; */
-    }  
+    
     .right{
         display: none;
     } 
-    
+    .right2-hidden{
+        display: block;
+    }
 }

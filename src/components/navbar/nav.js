@@ -1,15 +1,19 @@
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import Logo from './assets/Logo.jpg'
+import Logo from '../../assets/Logo.jpg'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SearchIcon from '@mui/icons-material/Search';
-
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import Dashboard from './components/Dashboard/Dashboard';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import './nav.css'
 function Nav({name}){
+    const navigate = useNavigate()
     
+    const LogoutHandle = () => {
+        navigate('/')
+        Swal.fire({
+            icon:'success',
+            title:'successfully logged out'
+        })
+    }
     return(
         <div className='Bar'>
             <div className="bar">
@@ -27,28 +31,19 @@ function Nav({name}){
                     </div>
                     <div className='person'>{name}</div>
                     </div>
-                    <div className='right2'>
+                    <div  className='right2' onClick={() => LogoutHandle()}>
                     <div className="logout"> Logout</div>
                     <div><LogoutOutlinedIcon className='person'/></div>
                     </div>
+                    
+                </div>
+                <div  className='right2-hidden' onClick={() => LogoutHandle()}>
+                    {/* <div className="logout"> Logout</div> */}
+                    <div><LogoutOutlinedIcon className='person'/></div>
                 </div>
                 </div>
             </div>
-            {/* <div className='Wsearch'>
-                <div className='Wsearch1'>
-                     <TextField className='search-bar' 
-                     InputProps={{
-                        startAdornment:(
-                            <div><SearchIcon/></div>
-                        )
-                     }}
-                     label="Search" variant="outlined" />
-                     <div>
-                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
-                     </div>
-                </div>
-            </div> */}
-            {/* <Dashboard  roleName={roleName}   /> */}
+            
         </div>
     )
 }

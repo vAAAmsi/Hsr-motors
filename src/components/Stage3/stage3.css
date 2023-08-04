@@ -1,28 +1,26 @@
 
 .stage3-card1{
     width: 400px;
+    /* width: 50%; */
     height: auto;
     background-color: white;
     border: 1px solid black ;
     border-radius: 20px;
     padding: 20px 0px;
-    /* text-align: center; */
+    margin-bottom: 20px;
 }
 .stage3-icon{
   width: 100%;
   display: flex;
   justify-content: center;
   height: auto;
-  /* background-color: red; */
 }
 .stage3-image{
-  /* margin: 0px auto; */
-/* background-color: red; */
     width: 150px;
     height: 150px;
     padding-top: 7px;
-    border-radius: 6%;
-    /* margin: 0px auto; */
+    border-radius: 50px;
+   
 }
 .stage3-Inner{
     margin-top: 20px;
@@ -30,11 +28,8 @@
     justify-content: center;
 }
 .stage3-inner{
-    /* background-color: red; */
     margin: 0px auto;
-    /* width: 100%; */
     height: auto;
-    /* background-color: red; */
 }
 .stage3-Icons{
     display: flex;
@@ -64,10 +59,7 @@
 
 }
 .stage3-name{
-    /* display: flex; */
     font-size: 17px;
-    font-weight: 600;
-    /* align-items: center; */
     
     
 }
@@ -80,3 +72,11 @@
     font-weight: 600;
 }
  
+
+@media screen and (max-width:400px) {
+    
+    .stage3-card1{
+        width: 350px;
+    }
+}
+    

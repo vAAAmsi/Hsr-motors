@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import { async } from '@firebase/util';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
-import Nav from '../../nav';
+import Nav from '../navbar/nav';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
@@ -33,7 +33,7 @@ const Stage2 = () => {
     const [currentClicked,setCurrentClicked]=useState();
     const [carName, setCarName] = useState('');
     const [carModel, setCarModel] = useState('');
-
+    const [filtername,setFiltername] = useState('')
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -53,9 +53,9 @@ const Stage2 = () => {
             setData(data => [...data, { ...doc.data(), id: doc.id }]);
         });
     }
-    const handleDelete = async (c) => {
+    const handleDelete = async (c) => { 
         const { id } = c;
-        console.log("id is",id)
+        console.log("id is",c)
         await deleteDoc(doc(db, "data", id));
         Swal.fire({
             title: 'success',
@@ -84,32 +84,38 @@ const Stage2 = () => {
             <Nav name={name}  />  
             <div className='Wsearch'>
                 <div className='Wsearch1'>
-                     <TextField className='search-bar' 
-                     InputProps={{
-                        startAdornment:(
-                            <div><SearchIcon/></div>
-                        )
-                     }}
-                     label="Search" variant="outlined" />
-                     <div>
-                     <Button style={{backgroundColor:'black',color:' #FFFFFF',width:130,height:45}} >Search</Button>
-                     </div>
+                <TextField style={{width:'80%'}} label='Search' onChange={(e) => {
+                        setFiltername(e.target.value)
+                     }} ></TextField>
+                     
                 </div>
             </div>
             <div className='Page'>
                 <div className='role-name' >Role : {roleName}</div>
                 <div className='page'>
                     {
-                        data.map((d) => {
+                        data
+                        .filter((item)=>{
+                            
+                            if(item.name.length !==undefined){
+                             return(
+                                 
+                                 item.name.toLowerCase().includes(filtername.toLowerCase())
+                             )
+                            }
+                         })
+                        
+                        .map((d,index) => {
+                            
                             return (
-                                <div>
-                                    <div className='card1'>
-                                        <div>
+                                <div key={index} >
+                                    <div  className='card1'>
+                                        <div >
                                             <div className='icon'>
                                                 <img className='image' src={Avthar}></img>
 
                                             </div>
-                                            <div className='Inner'>
+                                            <div className='Inner' >
                                                 <div className='inner'>
                                                     <div className='name'>NAME:<div className='name1'>{d.name}</div></div>
                                                     <div className='cont'>CONTACT NO:<div className='cont1'>{d.contact}</div></div>
